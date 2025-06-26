@@ -31,7 +31,7 @@
     "build:out": "tsc -p tsconfig.build.json",
     "commit": "git-cz",
     "typecheck": "tsc --noEmit",
-    "release": "",
+    "release": "npm run build && npm run start",
     "test": "vitest run",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
