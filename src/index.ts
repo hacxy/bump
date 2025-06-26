@@ -68,7 +68,8 @@ export async function bootstrap() {
 
   // Generate the changelog.
   step('\nGenerating the changelog...');
-  await run('npx', ['changelog']);
+
+  await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
   await run('eslint', ['CHANGELOG.md', '--fix', '--no-ignore']);
 
   const { yes: changelogOk } = await prompts({
