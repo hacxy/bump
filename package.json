@@ -1,0 +1,69 @@
+{
+  "name": "@hacxy/bump",
+  "type": "module",
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "CLI application development template using unbuild as a build tool.",
+  "author": {
+    "name": "hacxy",
+    "email": "hacxy.js@outlook.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "cli"
+  ],
+  "bin": {
+    "bump": "index.js"
+  },
+  "files": [
+    "dist",
+    "index.js"
+  ],
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "build:out": "tsc -p tsconfig.build.json",
+    "commit": "git-cz",
+    "typecheck": "tsc --noEmit",
+    "release": "",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:staged": "eslint --fix",
+    "prepare": "simple-git-hooks"
+  },
+  "dependencies": {
+    "conventional-changelog-cli": "^5.0.0",
+    "execa": "^9.6.0",
+    "picocolors": "^1.1.1",
+    "prompts": "^2.4.2",
+    "semver": "^7.7.2"
+  },
+  "devDependencies": {
+    "@hacxy/eslint-config": "^0.0.4",
+    "@types/node": "^20.12.5",
+    "@types/prompts": "^2.4.9",
+    "@types/semver": "^7.7.0",
+    "eslint": "^9.16.0",
+    "lint-staged": "^15.2.11",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.7.2",
+    "unbuild": "^3.3.1",
+    "vitest": "^2.1.8"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "node scripts/git-hooks/commit-msg.mjs"
+  },
+  "lint-staged": {
+    "*": [
+      "npm run lint:staged"
+    ]
+  }
+}
