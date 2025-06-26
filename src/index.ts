@@ -84,7 +84,7 @@ export async function bootstrap() {
 
   // Commit changes to the Git and create a tag.
   step('\nCommitting changes...');
-  await run('git', ['add', 'package.json']);
+  await run('git', ['add', 'package.json', 'CHANGELOG.md']);
   await run('git', ['commit', '-m', `chore: release: v${targetVersion}`]);
   await run('git', ['tag', `v${targetVersion}`]);
 
