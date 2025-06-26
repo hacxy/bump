@@ -13,8 +13,6 @@ export async function bootstrap() {
     })
     .concat('custom');
 
-  console.log(versions);
-
   const { release } = await prompts({
     type: 'select',
     name: 'release',
@@ -64,7 +62,7 @@ export async function bootstrap() {
 
   // Build the package.
   step('\nBuilding the package...');
-  await run('pnpm', ['build']);
+  await run('npm', ['run', 'build']);
 
   // Generate the changelog.
   step('\nGenerating the changelog...');
@@ -88,15 +86,30 @@ export async function bootstrap() {
   await run('git', ['commit', '-m', `chore: release: v${targetVersion}`]);
   await run('git', ['tag', `v${targetVersion}`]);
 
-  // Publish the package.
   step('\nPublishing the package...');
-  await run('pnpm', [
-    'publish',
-    '--tag',
-    tags[tag],
-    '--ignore-scripts',
-    '--no-git-checks',
-  ]);
+
+  const { pkgManage } = await prompts({
+    type: 'select',
+    name: 'pkgManage',
+    message: 'Select a package management tool to execute the publish command.',
+    choices: [
+      {
+        title: 'npm',
+        value: 'npm',
+      },
+      {
+        title: 'pnpm',
+        value: 'pnpm'
+      }
+    ]
+  });
+
+  if (pkgManage === 'npm') {
+    await run('npm', ['publish', '--tag', tags[tag], '--ignore-scripts']);
+  }
+  else if (pkgManage === 'pnpm') {
+    await run('pnpm', ['publish', '--tag', tags[tag], '--ignore-scripts', '--no-git-checks']);
+  }
 
   // Push to GitHub.
   step('\nPushing to GitHub...');
@@ -104,4 +117,4 @@ export async function bootstrap() {
   await run('git', ['push']);
 }
 
-bootstrap();
+bootstrap().catch(e => console.log(e));
