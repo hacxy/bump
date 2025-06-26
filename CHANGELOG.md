@@ -1,3 +1,14 @@
+## [0.0.1-beta.1](https://github.com/hacxy/bump/compare/v0.0.1-beta.0...v0.0.1-beta.1) (2025-06-26)
+
+### Bug Fixes
+
+* 调整eslint fix命令 ([78d1cb5](https://github.com/hacxy/bump/commit/78d1cb5fa2ca5e8dab935b0354b1c51f40b8cb5d))
+* change git command ([72f3831](https://github.com/hacxy/bump/commit/72f383183da42e0a29c0666c1031fada64828bb3))
+
+### Features
+
+* 发布时支持选择包管理工具 ([7604261](https://github.com/hacxy/bump/commit/7604261d83f25819e92ef7e4acf0bc0d3a49dc8a))
+
 ## 0.0.1-beta.0 (2025-06-26)
 
 ### Bug Fixes
