@@ -67,11 +67,13 @@ export async function bootstrap() {
   // Generate the changelog.
   step('\nGenerating the changelog...');
 
-  // await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
-
   await generateChangelog();
 
-  await run('npx', ['eslint', 'CHANGELOG.md', '--fix', '--no-ignore']);
+  try {
+    await run('npx', ['eslint', 'CHANGELOG.md', '--fix', '--no-ignore']);
+  }
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  catch (_) { }
 
   const { yes: changelogOk } = await prompts({
     type: 'confirm',
