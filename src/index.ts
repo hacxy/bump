@@ -1,6 +1,6 @@
 import prompts from 'prompts';
 import { valid } from 'semver';
-import { inc, run, step, tags, updatePackage, version, versionIncrements } from './utils';
+import { generateChangelog, inc, run, step, tags, updatePackage, version, versionIncrements } from './utils';
 
 export async function bootstrap() {
   let targetVersion = version;
@@ -67,7 +67,10 @@ export async function bootstrap() {
   // Generate the changelog.
   step('\nGenerating the changelog...');
 
-  await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
+  // await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
+
+  await generateChangelog();
+
   await run('npx', ['eslint', 'CHANGELOG.md', '--fix', '--no-ignore']);
 
   const { yes: changelogOk } = await prompts({

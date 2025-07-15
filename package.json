@@ -39,7 +39,7 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "conventional-changelog-cli": "^5.0.0",
+    "conventional-changelog": "^7.1.1",
     "execa": "^9.6.0",
     "picocolors": "^1.1.1",
     "prompts": "^2.4.2",

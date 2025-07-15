@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { ConventionalChangelog } from 'conventional-changelog';
 import { execa } from 'execa';
 import c from 'picocolors';
 import semver from 'semver';
@@ -29,3 +30,12 @@ export const versionIncrements = ['patch', 'minor', 'major', 'beta', 'alpha'];
 
 export const tags = ['latest', 'next'];
 
+export async function generateChangelog() {
+  const generator = new ConventionalChangelog()
+    .readPackage()
+    .loadPreset('angular');
+
+  generator
+    .writeStream()
+    .pipe(process.stdout);
+}
