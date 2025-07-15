@@ -1,3 +1,9 @@
+## [0.0.1-beta.6](https://github.com/hacxy/bump/compare/v0.0.1-beta.5...v0.0.1-beta.6) (2025-07-15)
+
+### Bug Fixes
+
+* remove internal changelog generator ([b322fac](https://github.com/hacxy/bump/commit/b322fac803464bbf77bb55e374c98972a665be4f))
+
 ## [0.0.1-beta.5](https://github.com/hacxy/bump/compare/v0.0.1-beta.4...v0.0.1-beta.5) (2025-07-15)
 
 ### Bug Fixes
