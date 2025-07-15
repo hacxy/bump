@@ -41,14 +41,12 @@
   "dependencies": {
     "conventional-changelog": "^7.1.1",
     "execa": "^9.6.0",
-    "fs-extra": "^11.3.0",
     "picocolors": "^1.1.1",
     "prompts": "^2.4.2",
     "semver": "^7.7.2"
   },
   "devDependencies": {
     "@hacxy/eslint-config": "^0.0.4",
-    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.12.5",
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.0",

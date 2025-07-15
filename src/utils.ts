@@ -1,8 +1,8 @@
+import { readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { cwd } from 'node:process';
 import { ConventionalChangelog } from 'conventional-changelog';
 import { execa } from 'execa';
-import { ensureFileSync, readFileSync, writeFileSync } from 'fs-extra';
 import c from 'picocolors';
 import semver from 'semver';
 
@@ -41,13 +41,13 @@ export async function generateChangelog() {
 
   const changelogPath = path.resolve(cwd(), 'CHANGELOG.md');
 
-  ensureFileSync(changelogPath);
-
-  // const outputStream = createWriteStream(changelogPath);
-  // // 生成 CHANGELOG
-  // generator.writeStream()
-  //   .pipe(outputStream)
-  //   .on('finish', () => console.log('CHANGELOG.md 已生成'));
+  try {
+    statSync(changelogPath);
+  }
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  catch (_) {
+    writeFileSync(changelogPath, '');
+  }
 
   const existingContent = readFileSync(changelogPath, 'utf8');
 
@@ -61,3 +61,4 @@ export async function generateChangelog() {
 
   writeFileSync(changelogPath, updatedContent);
 }
+
