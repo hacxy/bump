@@ -1,3 +1,9 @@
+## [0.0.1-beta.5](https://github.com/hacxy/bump/compare/v0.0.1-beta.4...v0.0.1-beta.5) (2025-07-15)
+
+### Bug Fixes
+
+* Skip execution when there is no ESLint ([cb6ec27](https://github.com/hacxy/bump/commit/cb6ec27e0ce39d147bc4367f67863737a884fca6))
+
 ## [0.0.1-beta.4](https://github.com/hacxy/bump/compare/v0.0.1-beta.3...v0.0.1-beta.4) (2025-07-15)
 
 ### Bug Fixes
