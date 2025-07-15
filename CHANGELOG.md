@@ -1,3 +1,10 @@
+## [0.0.1-beta.3](https://github.com/hacxy/bump/compare/v0.0.1-beta.2...v0.0.1-beta.3) (2025-07-15)
+
+### Bug Fixes
+
+* Adjust the execution command of the generation log ([c29f64d](https://github.com/hacxy/bump/commit/c29f64d3604d292c0230c1b3265229727f714558))
+* Adjust the log generation logic ([5c5fd99](https://github.com/hacxy/bump/commit/5c5fd994a983dc04079c55333f06c78745fd9669))
+
 ## [0.0.1-beta.1](https://github.com/hacxy/bump/compare/v0.0.1-beta.0...v0.0.1-beta.1) (2025-06-26)
 
 ### Bug Fixes
