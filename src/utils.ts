@@ -1,7 +1,8 @@
-import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { cwd } from 'node:process';
 import { ConventionalChangelog } from 'conventional-changelog';
 import { execa } from 'execa';
+import { ensureFileSync, readFileSync, writeFileSync } from 'fs-extra';
 import c from 'picocolors';
 import semver from 'semver';
 
@@ -30,12 +31,33 @@ export const versionIncrements = ['patch', 'minor', 'major', 'beta', 'alpha'];
 
 export const tags = ['latest', 'next'];
 
+/**
+ * changelog generator
+ */
 export async function generateChangelog() {
   const generator = new ConventionalChangelog()
     .readPackage()
     .loadPreset('angular');
 
-  generator
-    .writeStream()
-    .pipe(process.stdout);
+  const changelogPath = path.resolve(cwd(), 'CHANGELOG.md');
+
+  ensureFileSync(changelogPath);
+
+  // const outputStream = createWriteStream(changelogPath);
+  // // 生成 CHANGELOG
+  // generator.writeStream()
+  //   .pipe(outputStream)
+  //   .on('finish', () => console.log('CHANGELOG.md 已生成'));
+
+  const existingContent = readFileSync(changelogPath, 'utf8');
+
+  let changelogData = '';
+  for await (const chunk of generator.write()) {
+    changelogData += chunk;
+  }
+
+  // 将新日志插入到顶部
+  const updatedContent = `${changelogData}\n\n${existingContent}`;
+
+  writeFileSync(changelogPath, updatedContent);
 }
