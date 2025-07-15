@@ -1,3 +1,9 @@
+## [0.0.1-beta.4](https://github.com/hacxy/bump/compare/v0.0.1-beta.3...v0.0.1-beta.4) (2025-07-15)
+
+### Bug Fixes
+
+* missing angular preset ([0f007d1](https://github.com/hacxy/bump/commit/0f007d113f1480b24607da645550f483baf8c75d))
+
 ## [0.0.1-beta.3](https://github.com/hacxy/bump/compare/v0.0.1-beta.2...v0.0.1-beta.3) (2025-07-15)
 
 ### Bug Fixes
