@@ -38,10 +38,9 @@
     "lint:staged": "eslint --fix",
     "prepare": "simple-git-hooks"
   },
-  "peerDependencies": {
-    "conventional-changelog-cli": "^5.0.0"
-  },
   "dependencies": {
+    "conventional-changelog": "^7.1.1",
+    "conventional-changelog-angular": "^8.0.0",
     "execa": "^9.6.0",
     "picocolors": "^1.1.1",
     "prompts": "^2.4.2",

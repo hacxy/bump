@@ -1,3 +1,4 @@
+import { ConventionalChangelog, runProgram } from 'conventional-changelog';
 import prompts from 'prompts';
 import { valid } from 'semver';
 import { inc, run, step, tags, updatePackage, version, versionIncrements } from './utils';
@@ -67,13 +68,7 @@ export async function bootstrap() {
   // Generate the changelog.
   step('\nGenerating the changelog...');
 
-  try {
-    await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
-  }
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  catch (e) { }
-
-  // await generateChangelog();
+  runProgram(new ConventionalChangelog(process.cwd()), { preset: 'angular', infile: 'CHANGELOG.md' });
 
   await run('npx', ['eslint', 'CHANGELOG.md', '--fix', '--no-ignore']);
 
