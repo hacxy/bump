@@ -1,3 +1,9 @@
+# [0.1.0](https://github.com/hacxy/bump/compare/v0.0.1-beta.6...v0.1.0) (2025-07-16)
+
+### Bug Fixes
+
+* built-in generate changelog ([5459cfd](https://github.com/hacxy/bump/commit/5459cfd092db9ec176eeaa8ca451e0eb2a147e0f))
+
 ## [0.0.1-beta.6](https://github.com/hacxy/bump/compare/v0.0.1-beta.5...v0.0.1-beta.6) (2025-07-15)
 
 ### Bug Fixes
