@@ -25,7 +25,7 @@ bump
 - `-b, --build`: 在发布前构建包
 - `-c, --changelog`: 生成变更日志
 - `-g, --github`: 推送到GitHub
-- `-l, --lint`: 运行lint检查（预留选项）
+- `-t, --tag`: git标签
 
 ### 使用示例
 
