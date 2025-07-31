@@ -1,3 +1,14 @@
+# [0.2.0](https://github.com/hacxy/bump/compare/v0.1.0...v0.2.0) (2025-07-31)
+
+### Bug Fixes
+
+* Remove github flag and improve git push logic ([11fb5bd](https://github.com/hacxy/bump/commit/11fb5bd67c9f45d9a355c1dc17e1346d8fa158da))
+
+### Features
+
+* Add custom commit message template support for version bumping ([edb1363](https://github.com/hacxy/bump/commit/edb136319e302b09f82157c0d45de002df83ce63))
+* Update README with CLI options and switch to czg ([fde32b3](https://github.com/hacxy/bump/commit/fde32b38561359bb088a55e24b49c81d9f1bb30e))
+
 # [0.1.0](https://github.com/hacxy/bump/compare/v0.0.1-beta.6...v0.1.0) (2025-07-16)
 
 ### Bug Fixes
