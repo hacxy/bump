@@ -6,11 +6,12 @@ import { inc, run, step, tags, updatePackage, version, versionIncrements } from 
 
 const argv = process.argv.slice(2);
 
-const { changelog, build, tag } = mri(argv, {
+const { changelog, build, tag, message } = mri(argv, {
   alias: {
     c: 'changelog',
     b: 'build',
-    t: 'tag'
+    t: 'tag',
+    m: 'message'
   }
 });
 
@@ -114,7 +115,13 @@ async function commitChanges(targetVersion: string): Promise<void> {
   else {
     await run('git', ['add', 'package.json']);
   }
-  await run('git', ['commit', '-m', `chore: release: v${targetVersion}`]);
+
+  // 使用自定义提交信息模板或默认模板
+  const commitMessage = message
+    ? message.replace(/\{version\}/g, targetVersion)
+    : `chore: release: v${targetVersion}`;
+
+  await run('git', ['commit', '-m', commitMessage]);
 
   if (tag) {
     await run('git', ['tag', `v${targetVersion}`]);
