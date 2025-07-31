@@ -31,7 +31,7 @@
     "build:out": "tsc -p tsconfig.build.json",
     "cz": "czg",
     "typecheck": "tsc --noEmit",
-    "release": "npm run build && node index.js -b -c -t -m 'chore: release: bump v{version}'",
+    "release": "npm run build && node index.js -c -t -m 'chore: release: bump v{version}'",
     "test": "vitest run",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
