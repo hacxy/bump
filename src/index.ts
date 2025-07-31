@@ -1,9 +1,22 @@
 import { ConventionalChangelog, runProgram } from 'conventional-changelog';
+import mri from 'mri';
 import prompts from 'prompts';
 import { valid } from 'semver';
 import { inc, run, step, tags, updatePackage, version, versionIncrements } from './utils';
 
-export async function bootstrap() {
+const argv = process.argv.slice(2);
+
+const { changelog, build, github, tag } = mri(argv, {
+  alias: {
+    c: 'changelog',
+    b: 'build',
+    g: 'github',
+    t: 'tag'
+  }
+});
+
+// 获取目标版本
+async function getTargetVersion(): Promise<string> {
   let targetVersion = version;
   const versions = versionIncrements
     .map(i => {
@@ -31,7 +44,6 @@ export async function bootstrap() {
       })
     ).version;
   }
-
   else {
     targetVersion = versions[release].match(/\((.*)\)/)?.[1] as string;
   }
@@ -40,32 +52,44 @@ export async function bootstrap() {
     throw new Error(`Invalid target version: ${targetVersion}`);
   }
 
+  return targetVersion;
+}
+
+// 获取标签类型
+async function getTagType(): Promise<number> {
   const { tag } = await prompts({
     type: 'select',
     name: 'tag',
     message: 'Select tag type',
     choices: tags.map((item, index) => ({ title: item, value: index })),
   });
+  return tag;
+}
 
+// 确认发布
+async function confirmRelease(targetVersion: string, tagIndex: number): Promise<boolean> {
   const { yes: tagOk } = await prompts({
     type: 'confirm',
     name: 'yes',
-    message: `Releasing v${targetVersion} on ${tags[tag]}. Confirm?`,
+    message: `Releasing v${targetVersion} on ${tags[tagIndex]}. Confirm?`,
   });
+  return tagOk;
+}
 
-  if (!tagOk) {
-    process.exit(0);
-  }
-
-  // Update the package version.
+// 更新包版本
+async function updateVersion(targetVersion: string): Promise<void> {
   step('\nUpdating the package version...');
   updatePackage(targetVersion);
+}
 
-  // Build the package.
+// 构建包
+async function buildPackage(): Promise<void> {
   step('\nBuilding the package...');
   await run('npm', ['run', 'build']);
+}
 
-  // Generate the changelog.
+// 生成变更日志
+async function generateChangelog(): Promise<boolean> {
   step('\nGenerating the changelog...');
 
   runProgram(new ConventionalChangelog(process.cwd()), { preset: 'angular', infile: 'CHANGELOG.md' });
@@ -78,16 +102,28 @@ export async function bootstrap() {
     message: 'Changelog generated. Does it look good?',
   });
 
-  if (!changelogOk) {
-    process.exit(0);
-  }
+  return changelogOk;
+}
 
-  // Commit changes to the Git and create a tag.
+// 提交更改
+async function commitChanges(targetVersion: string): Promise<void> {
   step('\nCommitting changes...');
-  await run('git', ['add', 'package.json', 'CHANGELOG.md']);
+  // 判断是否有changelog选项，如果有则添加CHANGELOG.md
+  if (changelog) {
+    await run('git', ['add', 'package.json', 'CHANGELOG.md']);
+  }
+  else {
+    await run('git', ['add', 'package.json']);
+  }
   await run('git', ['commit', '-m', `chore: release: v${targetVersion}`]);
-  await run('git', ['tag', `v${targetVersion}`]);
 
+  if (tag) {
+    await run('git', ['tag', `v${targetVersion}`]);
+  }
+}
+
+// 发布包
+async function publishPackage(tagIndex: number): Promise<void> {
   step('\nPublishing the package...');
 
   const { pkgManage } = await prompts({
@@ -107,16 +143,63 @@ export async function bootstrap() {
   });
 
   if (pkgManage === 'npm') {
-    await run('npm', ['publish', '--tag', tags[tag], '--ignore-scripts']);
+    await run('npm', ['publish', '--tag', tags[tagIndex], '--ignore-scripts']);
   }
   else if (pkgManage === 'pnpm') {
-    await run('pnpm', ['publish', '--tag', tags[tag], '--ignore-scripts', '--no-git-checks']);
+    await run('pnpm', ['publish', '--tag', tags[tagIndex], '--ignore-scripts', '--no-git-checks']);
+  }
+}
+
+// 推送到GitHub
+async function pushToGitHub(targetVersion: string): Promise<void> {
+  step('\nPushing to GitHub...');
+  if (tag) {
+    await run('git', ['push', 'origin', `refs/tags/v${targetVersion}`]);
+  }
+  await run('git', ['push']);
+}
+
+export async function bootstrap() {
+  // 根据命令行选项决定执行流程
+
+  // 获取目标版本
+  const targetVersion = await getTargetVersion();
+
+  // 获取标签类型
+  const tagIndex = await getTagType();
+
+  // 确认发布
+  const confirmed = await confirmRelease(targetVersion, tagIndex);
+  if (!confirmed) {
+    process.exit(0);
   }
 
-  // Push to GitHub.
-  step('\nPushing to GitHub...');
-  await run('git', ['push', 'origin', `refs/tags/v${targetVersion}`]);
-  await run('git', ['push']);
+  // 更新包版本
+  await updateVersion(targetVersion);
+
+  // 根据选项决定是否构建
+  if (build) {
+    await buildPackage();
+  }
+
+  // 根据选项决定是否生成变更日志
+  if (changelog) {
+    const changelogOk = await generateChangelog();
+    if (!changelogOk) {
+      process.exit(0);
+    }
+  }
+
+  // 提交更改
+  await commitChanges(targetVersion);
+
+  // 发布包
+  await publishPackage(tagIndex);
+
+  // 根据选项决定是否推送到GitHub
+  if (github) {
+    await pushToGitHub(targetVersion);
+  }
 }
 
 bootstrap().catch(e => console.log(e));
