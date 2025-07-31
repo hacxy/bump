@@ -6,11 +6,10 @@ import { inc, run, step, tags, updatePackage, version, versionIncrements } from 
 
 const argv = process.argv.slice(2);
 
-const { changelog, build, github, tag } = mri(argv, {
+const { changelog, build, tag } = mri(argv, {
   alias: {
     c: 'changelog',
     b: 'build',
-    g: 'github',
     t: 'tag'
   }
 });
@@ -151,12 +150,19 @@ async function publishPackage(tagIndex: number): Promise<void> {
 }
 
 // 推送到GitHub
-async function pushToGitHub(targetVersion: string): Promise<void> {
+async function gitPush(targetVersion: string): Promise<void> {
   step('\nPushing to GitHub...');
   if (tag) {
     await run('git', ['push', 'origin', `refs/tags/v${targetVersion}`]);
   }
-  await run('git', ['push']);
+  // 判断是否为首次推送, 如果是则添加-u参数
+  const isFirstPush = await run('git', ['rev-parse', 'origin/main']);
+  if (isFirstPush) {
+    await run('git', ['push', '-u', 'origin', 'main']);
+  }
+  else {
+    await run('git', ['push']);
+  }
 }
 
 export async function bootstrap() {
@@ -196,10 +202,7 @@ export async function bootstrap() {
   // 发布包
   await publishPackage(tagIndex);
 
-  // 根据选项决定是否推送到GitHub
-  if (github) {
-    await pushToGitHub(targetVersion);
-  }
+  await gitPush(targetVersion);
 }
 
 bootstrap().catch(e => console.log(e));
