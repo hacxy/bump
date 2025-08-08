@@ -2,7 +2,7 @@ import { ConventionalChangelog, runProgram } from 'conventional-changelog';
 import mri from 'mri';
 import prompts from 'prompts';
 import { valid } from 'semver';
-import { inc, run, step, tags, updatePackage, version, versionIncrements } from './utils';
+import { inc, run, step, tags, updatePackage, version, versionIncrements } from './utils.js';
 
 const argv = process.argv.slice(2);
 
@@ -45,7 +45,7 @@ async function getTargetVersion(): Promise<string> {
     ).version;
   }
   else {
-    targetVersion = versions[release].match(/\((.*)\)/)?.[1] as string;
+    targetVersion = versions[release!]?.match(/\((.*)\)/)?.[1] as string;
   }
 
   if (!valid(targetVersion)) {
