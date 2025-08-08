@@ -1,3 +1,7 @@
 import linter from '@hacxy/eslint-config/nodejs';
 
-export default linter({});
+export default linter({
+  rules: {
+    'antfu/no-import-dist': 'off',
+  },
+});

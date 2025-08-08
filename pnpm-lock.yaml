@@ -17,15 +17,6 @@ importers:
       mri:
         specifier: ^1.2.0
         version: 1.2.0
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
-      prompts:
-        specifier: ^2.4.2
-        version: 2.4.2
-      semver:
-        specifier: ^7.7.2
-        version: 7.7.2
     devDependencies:
       '@hacxy/eslint-config':
         specifier: ^0.4.1
@@ -45,6 +36,9 @@ importers:
       '@types/semver':
         specifier: ^7.7.0
         version: 7.7.0
+      consola:
+        specifier: ^3.4.2
+        version: 3.4.2
       czg:
         specifier: ^1.12.0
         version: 1.12.0
@@ -57,6 +51,15 @@ importers:
       lint-staged:
         specifier: ^15.2.11
         version: 15.5.2
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
+      prompts:
+        specifier: ^2.4.2
+        version: 2.4.2
+      semver:
+        specifier: ^7.7.2
+        version: 7.7.2
       simple-git-hooks:
         specifier: ^2.11.1
         version: 2.13.0
@@ -1019,6 +1022,10 @@ packages:
 
   confbox@0.2.2:
     resolution: {integrity: sha512-1NB+BKqhtNipMsov4xI/NnhCKp9XG9NamYp5PVm9klAT0fsrNPjaFICsCFhNhwZJKNh7zB/3q8qXz0E9oaMNtQ==}
+
+  consola@3.4.2:
+    resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
+    engines: {node: ^14.18.0 || >=16.10.0}
 
   conventional-changelog-angular@8.0.0:
     resolution: {integrity: sha512-CLf+zr6St0wIxos4bmaKHRXWAcsCXrJU6F4VdNDrGRK3B8LDLKoX3zuMV5GhtbGkVR/LohZ6MT6im43vZLSjmA==}
@@ -3341,6 +3348,8 @@ snapshots:
   confbox@0.1.8: {}
 
   confbox@0.2.2: {}
+
+  consola@3.4.2: {}
 
   conventional-changelog-angular@8.0.0:
     dependencies:
