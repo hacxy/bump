@@ -48,7 +48,9 @@
     "semver": "^7.7.2"
   },
   "devDependencies": {
-    "@hacxy/eslint-config": "^0.0.4",
+    "@hacxy/eslint-config": "^0.4.1",
+    "@hacxy/fe": "^0.6.1",
+    "@hacxy/tsconfig": "^0.1.0",
     "@types/node": "^20.12.5",
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.0",
@@ -62,7 +64,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "commit-msg": "node scripts/git-hooks/commit-msg.mjs"
+    "commit-msg": "npx fe msg"
   },
   "lint-staged": {
     "*": [
