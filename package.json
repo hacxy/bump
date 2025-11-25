@@ -8,7 +8,8 @@
   "description": "Version release tools.",
   "author": {
     "name": "hacxy",
-    "email": "hacxy.js@outlook.com"
+    "email": "hacxy.js@outlook.com",
+    "url": "https://hacxy.cn"
   },
   "license": "MIT",
   "keywords": [
@@ -50,7 +51,6 @@
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.0",
     "consola": "^3.4.2",
-
     "czg": "^1.12.0",
     "eslint": "^9.16.0",
     "execa": "^9.6.0",
@@ -59,7 +59,7 @@
     "prompts": "^2.4.2",
     "semver": "^7.7.2",
     "simple-git-hooks": "^2.11.1",
-    "tsdown": "^0.13.4",
+    "tsdown": "^0.16.6",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },

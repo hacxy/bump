@@ -1,6 +1,7 @@
-import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit } from './utils/exec.js';
+import { tags } from './data/index.js';
+import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit, npmPublish } from './utils/exec.js';
 import { generateChangelog } from './utils/generate.js';
-import { confirmBuild, confirmChangelog, confirmCommit, confirmPush, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
+import { confirmBuild, confirmChangelog, confirmCommit, confirmNpmPublish, confirmPush, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
 import { changePackageVersion, getTargetVersion } from './utils/version.js';
 
 export async function bootstrap() {
@@ -19,7 +20,6 @@ export async function bootstrap() {
   }
 
   const git = await hasGit();
-
   if (git) {
     const changelog = await confirmChangelog();
     if (changelog) {
@@ -49,9 +49,11 @@ export async function bootstrap() {
   }
 
   // 发布包
-  // await npmPublish(tag);
+  const publish = await confirmNpmPublish();
 
-  // await gitPush(targetVersion);
+  if (publish) {
+    await npmPublish(tags[tagIndex] || 'latest');
+  }
 }
 
 bootstrap().catch(e => console.log(e));

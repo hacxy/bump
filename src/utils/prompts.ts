@@ -72,3 +72,13 @@ export async function confirmPush(): Promise<boolean> {
   });
   return push;
 }
+
+export async function confirmNpmPublish(): Promise<boolean> {
+  const { npmPublish } = await prompts({
+    type: 'confirm',
+    name: 'npmPublish',
+    message: 'Do you need to publish the package to npm?',
+    initial: true,
+  });
+  return npmPublish;
+}

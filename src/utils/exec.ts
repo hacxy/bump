@@ -48,9 +48,10 @@ export async function npmPublish(tag: string) {
 // 判断用户有没有git, 并且是否为git仓库
 export async function hasGit() {
   const isGit = await execa`git --version`;
+
   if (isGit.exitCode === 0) {
     const isGitRepo = await execa`git status`;
-    if (isGitRepo.exitCode === 0 && isGitRepo.stdout.includes('git status')) {
+    if (isGitRepo.exitCode === 0) {
       return true;
     }
   }

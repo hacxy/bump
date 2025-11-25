@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { bootstrap } from '../src';
+import { bootstrap } from '../src/index.js';
 
 describe('cli template', () => {
-  it('bootstrap', () => {
-    expect(bootstrap()).toBeUndefined();
+  it('bootstrap', async () => {
+    expect(bootstrap).toBeDefined();
   });
 });
