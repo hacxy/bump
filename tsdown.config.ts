@@ -5,5 +5,6 @@ export default defineConfig({
   outDir: 'dist',
   format: 'esm',
   minify: true,
-  shims: true
+  shims: true,
+  outExtensions: () => ({ js: '.js' })
 });

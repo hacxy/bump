@@ -1,5 +1,5 @@
 import prompts from 'prompts';
-import { tags } from '../data/index.js';
+import { tags } from '../const/index.js';
 
 // 获取标签类型
 export async function getTagType(): Promise<number> {

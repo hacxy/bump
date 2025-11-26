@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { consola } from 'consola';
 import { ConventionalChangelog, runProgram } from 'conventional-changelog';
 import { execa } from 'execa';

@@ -1,9 +1,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import process from 'node:process';
 import { consola } from 'consola';
 import prompts from 'prompts';
 import semver, { valid } from 'semver';
-import { version, versionIncrements } from '../data/index.js';
+import { version, versionIncrements } from '../const/index.js';
 
 // 更新package.json中的版本号
 export function changePackageVersion(version: string) {

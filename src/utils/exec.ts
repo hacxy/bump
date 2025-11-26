@@ -1,6 +1,6 @@
 import { consola } from 'consola';
 import { execa } from 'execa';
-import { pkg } from '../data/index.js';
+import { pkg } from '../const/index.js';
 // 构建包
 export async function buildPackage(): Promise<void> {
   // 先判断下有没有build命令

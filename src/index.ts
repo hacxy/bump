@@ -1,4 +1,5 @@
-import { tags } from './data/index.js';
+import process from 'node:process';
+import { tags } from './const/index.js';
 import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit, npmPublish } from './utils/exec.js';
 import { generateChangelog } from './utils/generate.js';
 import { confirmBuild, confirmChangelog, confirmCommit, confirmNpmPublish, confirmPush, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
