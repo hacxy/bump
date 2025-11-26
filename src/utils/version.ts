@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { input, select } from '@inquirer/prompts';
 import { consola } from 'consola';
-import prompts from 'prompts';
 import semver, { valid } from 'semver';
 import { version, versionIncrements } from '../const/index.js';
 
@@ -32,22 +32,27 @@ export async function getTargetVersion(): Promise<string> {
     })
     .concat('custom');
 
-  const { release } = await prompts({
-    type: 'select',
-    name: 'release',
+  const release = await select({
     message: 'Select release type',
-    choices: versions.map((item, index) => ({ title: item, value: index })),
+    choices: versions.map((item, index) => ({ name: item, value: index })),
+    theme: {
+      keybindings: ['vim']
+    },
+  }).catch(e => {
+    consola.warn(e.message);
+    process.exit(0);
   });
 
   if (release === 5) {
     targetVersion = (
-      await prompts({
-        type: 'text',
-        name: 'version',
+      await input({
         message: 'Input custom version',
-        initial: version,
+        default: version,
+      }).catch(e => {
+        consola.warn(e.message);
+        process.exit(0);
       })
-    ).version;
+    );
   }
   else {
     targetVersion = versions[release!]?.match(/\((.*)\)/)?.[1] as string;

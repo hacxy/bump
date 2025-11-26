@@ -40,23 +40,23 @@
   },
   "dependencies": {
     "conventional-changelog": "^7.1.1",
-    "conventional-changelog-angular": "^8.0.0",
-    "mri": "^1.2.0"
+    "conventional-changelog-angular": "^8.0.0"
   },
   "devDependencies": {
+    "@clack/prompts": "^0.11.0",
     "@hacxy/eslint-config": "^0.5.4",
     "@hacxy/fe": "^0.6.1",
     "@hacxy/tsconfig": "^0.1.0",
+    "@inquirer/prompts": "8.0.1",
     "@types/node": "^20.12.5",
-    "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.0",
     "consola": "^3.4.2",
     "czg": "^1.12.0",
     "eslint": "^9.39.1",
     "execa": "^9.6.0",
     "lint-staged": "^15.2.11",
+    "mri": "^1.2.0",
     "picocolors": "^1.1.1",
-    "prompts": "^2.4.2",
     "semver": "^7.7.2",
     "simple-git-hooks": "^2.11.1",
     "tsdown": "^0.16.6",

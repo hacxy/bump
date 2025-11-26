@@ -3,11 +3,14 @@ import { tags } from './const/index.js';
 import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit, npmPublish } from './utils/exec.js';
 import { generateChangelog } from './utils/generate.js';
 import { confirmBuild, confirmChangelog, confirmCommit, confirmNpmPublish, confirmPush, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
+
 import { changePackageVersion, getTargetVersion } from './utils/version.js';
 
 export async function bootstrap() {
   const targetVersion = await getTargetVersion();
+
   const tagIndex = await getTagType();
+
   const confirmed = await confirmRelease(targetVersion, tagIndex);
   if (!confirmed) {
     process.exit(0);
