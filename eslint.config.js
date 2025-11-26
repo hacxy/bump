@@ -4,5 +4,5 @@ export default linter({
   rules: {
     'antfu/no-import-dist': 'off',
   },
-  ignores: ['CHANGELOG.md']
+  ignores: ['CHANGELOG.md'],
 });

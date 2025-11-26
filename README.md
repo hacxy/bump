@@ -76,6 +76,7 @@ bump --message "chore(release): {version} - 新功能发布"
 ### 默认提交信息
 
 如果不指定 `--message` 选项，将使用默认的提交信息格式：
+
 ```
 chore: release: v{version}
 ```
