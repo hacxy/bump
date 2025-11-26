@@ -14,8 +14,13 @@ export async function buildPackage(): Promise<void> {
 }
 
 // 添加文件到git
-export async function gitAdd(files: string[]) {
-  await execa`git add ${files.join(' ')}`;
+export async function gitAdd(changelog: boolean) {
+  if (changelog) {
+    await execa`git add CHANGELOG.md package.json`;
+  }
+  else {
+    await execa`git add package.json`;
+  }
 }
 
 // 提交更改
