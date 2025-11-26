@@ -28,12 +28,7 @@ export async function bootstrap() {
 
     const commit = await confirmCommit();
     if (commit) {
-      if (changelog) {
-        await gitAdd(['package.json', 'CHANGELOG.md']);
-      }
-      else {
-        await gitAdd(['package.json']);
-      }
+      await gitAdd(changelog);
       await gitCommit(`chore: release: v${targetVersion}`);
     }
 
