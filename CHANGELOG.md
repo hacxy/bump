@@ -1,44 +1,54 @@
+# [0.3.0](https://github.com/hacxy/bump/compare/v0.2.0...v0.3.0) (2025-11-26)
+
+### Bug Fixes
+
+- Update gitAdd function to conditionally add changelog and package.json ([a228680](https://github.com/hacxy/bump/commit/a228680163f0b9297c724accc0cf7e054086a5c6))
+
+### Features
+
+- Enhance release process with npm publish confirmation and refactor bootstrap logic ([c1958f9](https://github.com/hacxy/bump/commit/c1958f914ae28da53ab9ade0c498417474924167))
+
 # [0.2.0](https://github.com/hacxy/bump/compare/v0.1.0...v0.2.0) (2025-07-31)
 
 ### Bug Fixes
 
-* Remove github flag and improve git push logic ([11fb5bd](https://github.com/hacxy/bump/commit/11fb5bd67c9f45d9a355c1dc17e1346d8fa158da))
+- Remove github flag and improve git push logic ([11fb5bd](https://github.com/hacxy/bump/commit/11fb5bd67c9f45d9a355c1dc17e1346d8fa158da))
 
 ### Features
 
-* Add custom commit message template support for version bumping ([edb1363](https://github.com/hacxy/bump/commit/edb136319e302b09f82157c0d45de002df83ce63))
-* Update README with CLI options and switch to czg ([fde32b3](https://github.com/hacxy/bump/commit/fde32b38561359bb088a55e24b49c81d9f1bb30e))
+- Add custom commit message template support for version bumping ([edb1363](https://github.com/hacxy/bump/commit/edb136319e302b09f82157c0d45de002df83ce63))
+- Update README with CLI options and switch to czg ([fde32b3](https://github.com/hacxy/bump/commit/fde32b38561359bb088a55e24b49c81d9f1bb30e))
 
 # [0.1.0](https://github.com/hacxy/bump/compare/v0.0.1-beta.6...v0.1.0) (2025-07-16)
 
 ### Bug Fixes
 
-* built-in generate changelog ([5459cfd](https://github.com/hacxy/bump/commit/5459cfd092db9ec176eeaa8ca451e0eb2a147e0f))
+- built-in generate changelog ([5459cfd](https://github.com/hacxy/bump/commit/5459cfd092db9ec176eeaa8ca451e0eb2a147e0f))
 
 ## [0.0.1-beta.6](https://github.com/hacxy/bump/compare/v0.0.1-beta.5...v0.0.1-beta.6) (2025-07-15)
 
 ### Bug Fixes
 
-* remove internal changelog generator ([b322fac](https://github.com/hacxy/bump/commit/b322fac803464bbf77bb55e374c98972a665be4f))
+- remove internal changelog generator ([b322fac](https://github.com/hacxy/bump/commit/b322fac803464bbf77bb55e374c98972a665be4f))
 
 ## [0.0.1-beta.5](https://github.com/hacxy/bump/compare/v0.0.1-beta.4...v0.0.1-beta.5) (2025-07-15)
 
 ### Bug Fixes
 
-* Skip execution when there is no ESLint ([cb6ec27](https://github.com/hacxy/bump/commit/cb6ec27e0ce39d147bc4367f67863737a884fca6))
+- Skip execution when there is no ESLint ([cb6ec27](https://github.com/hacxy/bump/commit/cb6ec27e0ce39d147bc4367f67863737a884fca6))
 
 ## [0.0.1-beta.4](https://github.com/hacxy/bump/compare/v0.0.1-beta.3...v0.0.1-beta.4) (2025-07-15)
 
 ### Bug Fixes
 
-* missing angular preset ([0f007d1](https://github.com/hacxy/bump/commit/0f007d113f1480b24607da645550f483baf8c75d))
+- missing angular preset ([0f007d1](https://github.com/hacxy/bump/commit/0f007d113f1480b24607da645550f483baf8c75d))
 
 ## [0.0.1-beta.3](https://github.com/hacxy/bump/compare/v0.0.1-beta.2...v0.0.1-beta.3) (2025-07-15)
 
 ### Bug Fixes
 
-* Adjust the execution command of the generation log ([c29f64d](https://github.com/hacxy/bump/commit/c29f64d3604d292c0230c1b3265229727f714558))
-* Adjust the log generation logic ([5c5fd99](https://github.com/hacxy/bump/commit/5c5fd994a983dc04079c55333f06c78745fd9669))
+- Adjust the execution command of the generation log ([c29f64d](https://github.com/hacxy/bump/commit/c29f64d3604d292c0230c1b3265229727f714558))
+- Adjust the log generation logic ([5c5fd99](https://github.com/hacxy/bump/commit/5c5fd994a983dc04079c55333f06c78745fd9669))
 
 ## [0.0.1-beta.1](https://github.com/hacxy/bump/compare/v0.0.1-beta.0...v0.0.1-beta.1) (2025-06-26)
 
