@@ -1,3 +1,9 @@
+## [0.3.1](https://github.com/hacxy/bump/compare/v0.3.0...v0.3.1) (2025-11-26)
+
+### Bug Fixes
+
+- streamline gitAdd logic in bootstrap function to directly use changelog ([5ba2cb1](https://github.com/hacxy/bump/commit/5ba2cb1efea3abe9fb3e8ab524740d78ba71017a))
+
 # [0.3.0](https://github.com/hacxy/bump/compare/v0.2.0...v0.3.0) (2025-11-26)
 
 ### Bug Fixes
