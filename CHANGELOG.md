@@ -1,3 +1,11 @@
+## [0.3.2](https://github.com/hacxy/bump/compare/v0.3.1...v0.3.2) (2025-11-27)
+
+### Bug Fixes
+
+- enhance error handling in bootstrap process with revert functionality ([d200620](https://github.com/hacxy/bump/commit/d2006202e80896605bb502c038a967bb72917883))
+- improve error handling in bootstrap process by logging errors and ensuring proper exits ([4ddd048](https://github.com/hacxy/bump/commit/4ddd04864bb9c7186139efee88366db3c9521ff0))
+- refine error handling in bootstrap process and update changelog restoration logic ([57f8186](https://github.com/hacxy/bump/commit/57f81865c6d2bed4a42cfd233f3c0111af06ec7e))
+
 ## [0.3.1](https://github.com/hacxy/bump/compare/v0.3.0...v0.3.1) (2025-11-26)
 
 ### Bug Fixes
