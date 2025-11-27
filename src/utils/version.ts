@@ -38,9 +38,6 @@ export async function getTargetVersion(): Promise<string> {
     theme: {
       keybindings: ['vim']
     },
-  }).catch(e => {
-    consola.warn(e.message);
-    process.exit(0);
   });
 
   if (release === 5) {

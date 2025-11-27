@@ -1,5 +1,7 @@
+import process from 'node:process';
 import { consola } from 'consola';
 import { execa } from 'execa';
+import ora from 'ora';
 import { pkg } from '../const/index.js';
 // 构建包
 export async function buildPackage(): Promise<void> {
@@ -7,10 +9,12 @@ export async function buildPackage(): Promise<void> {
   if (!pkg.scripts?.build) {
     throw new Error('No build command found in package.json');
   }
-
-  consola.start('Building the package...');
-  await execa`npm run build`;
-  consola.success('Build completed');
+  const spinner = ora('Building the package...').start();
+  await execa`npm run build`.catch(e => {
+    spinner.fail(e.message);
+    process.exit(0);
+  });
+  spinner.succeed('Build completed');
 }
 
 // 添加文件到git
@@ -61,4 +65,16 @@ export async function hasGit() {
     }
   }
   return false;
+}
+
+// 还原修改
+export async function revertChanges(changelog: boolean) {
+  if (changelog) {
+    await execa`git reset HEAD package.json eslint.config.mjs`;
+    await execa`git restore package.json eslint.config.mjs`;
+  }
+  else {
+    await execa`git reset HEAD package.json`;
+    await execa`git restore package.json`;
+  }
 }
