@@ -1,10 +1,10 @@
 import process from 'node:process';
 import consola from 'consola';
 import { tags } from './const/index.js';
-import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit, npmPublish } from './utils/exec.js';
+import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit, npmPublish, revertChanges, revertLastCommit } from './utils/exec.js';
 import { generateChangelog } from './utils/generate.js';
 
-import { confirmBuild, confirmChangelog, confirmCommit, confirmNpmPublish, confirmPush, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
+import { confirmBuild, confirmChangelog, confirmCommit, confirmNpmPublish, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
 import { changePackageVersion, getTargetVersion } from './utils/version.js';
 
 export async function bootstrap() {
@@ -27,10 +27,14 @@ export async function bootstrap() {
   changePackageVersion(targetVersion);
 
   // 是否需要执行build命令
-  const build = await confirmBuild();
+  const build = await confirmBuild().catch(() => {
+    revertChanges(false);
+  });
 
   if (build) {
-    await buildPackage();
+    await buildPackage().catch(() => {
+      revertChanges(false);
+    });
   }
 
   // 判断是否有git仓库
@@ -38,28 +42,33 @@ export async function bootstrap() {
 
   if (git) {
     // 是否需要生成changelog
-    const changelog = await confirmChangelog();
+    const changelog = await confirmChangelog().catch(() => {
+      revertChanges(false);
+      return false;
+    });
+
     if (changelog) {
-      await generateChangelog();
+      await generateChangelog().catch(() => {
+        revertChanges(changelog);
+      });
     }
 
     // 是否需要提交更改
-    const commit = await confirmCommit();
-    if (commit) {
-      await gitAdd(changelog);
-      await gitCommit(`chore: release: v${targetVersion}`);
-    }
+    const commit = await confirmCommit().catch(() => {
+      revertChanges(changelog);
+    });
 
     if (commit) {
-      const tag = await confirmTag(targetVersion);
+      // 提交并发布
+      await gitAdd(changelog).catch(() => revertChanges(changelog));
+      await gitCommit(`chore: release: v${targetVersion}`).catch(() => revertChanges(changelog));
+
+      const tag = await confirmTag(targetVersion).catch(() => revertLastCommit());
       if (tag) {
-        await gitTag(`v${targetVersion}`);
+        await gitTag(`v${targetVersion}`).catch(() => revertLastCommit());
       }
-    }
 
-    const push = await confirmPush();
-    if (push) {
-      await gitPush(`v${targetVersion}`);
+      await gitPush(`v${targetVersion}`).catch(() => revertLastCommit());
     }
   }
 

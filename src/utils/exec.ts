@@ -78,3 +78,7 @@ export async function revertChanges(changelog: boolean) {
     await execa`git restore package.json`;
   }
 }
+// 撤销上一次提交并还原所有更改
+export async function revertLastCommit() {
+  await execa`git reset --hard HEAD~1`;
+}
