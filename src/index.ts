@@ -4,7 +4,7 @@ import { tags } from './const/index.js';
 import { buildPackage, gitAdd, gitCommit, gitPush, gitTag, hasGit, npmPublish, revertChanges, revertLastCommit } from './utils/exec.js';
 import { generateChangelog } from './utils/generate.js';
 
-import { confirmBuild, confirmChangelog, confirmCommit, confirmNpmPublish, confirmRelease, confirmTag, getTagType } from './utils/prompts.js';
+import { confirmBuild, confirmChangelog, confirmNpmPublish, confirmPush, confirmRelease, getTagType } from './utils/prompts.js';
 import { changePackageVersion, getTargetVersion } from './utils/version.js';
 
 export async function bootstrap() {
@@ -23,16 +23,16 @@ export async function bootstrap() {
   changePackageVersion(targetVersion);
 
   // 是否需要执行build命令
-  const build = await confirmBuild().catch(e => {
-    revertChanges(false);
+  const build = await confirmBuild().catch(async e => {
+    await revertChanges(false);
     consola.error(e.message);
     process.exit(0);
   });
 
   if (build) {
-    await buildPackage().catch(e => {
+    await buildPackage().catch(async e => {
+      await revertChanges(false);
       consola.error(e.message);
-      revertChanges(false);
       process.exit(0);
     });
   }
@@ -42,64 +42,65 @@ export async function bootstrap() {
 
   if (git) {
     // 是否需要生成changelog
-    const changelog = await confirmChangelog().catch(e => {
+    const changelog = await confirmChangelog().catch(async e => {
+      await revertChanges(false);
       consola.error(e.message);
-      revertChanges(false);
       process.exit(0);
     });
 
     if (changelog) {
-      await generateChangelog().catch(e => {
+      await generateChangelog().catch(async e => {
+        await revertChanges(changelog);
         consola.error(e.message);
-        revertChanges(changelog);
         process.exit(0);
       });
     }
 
     // 是否需要提交更改
-    const commit = await confirmCommit().catch(e => {
+    const push = await confirmPush().catch(async e => {
+      await revertChanges(changelog);
       consola.error(e.message);
-      revertChanges(changelog);
       process.exit(0);
     });
 
-    if (commit) {
-      // 提交并发布
-      await gitAdd(changelog).catch(e => {
+    if (push) {
+      // 暂存变更
+      await gitAdd(changelog).catch(async e => {
+        await revertChanges(changelog);
         consola.error(e.message);
-        revertChanges(changelog);
         process.exit(0);
       });
 
-      await gitCommit(`chore: release: v${targetVersion}`).catch(e => {
+      // 提交变更
+      await gitCommit(`chore: release: v${targetVersion}`).catch(async e => {
+        await revertChanges(changelog);
         consola.error(e.message);
-        revertChanges(changelog);
         process.exit(0);
       });
 
-      const tag = await confirmTag(targetVersion).catch(e => {
+      // const tag = await confirmTag(targetVersion).catch(async e => {
+      //   consola.error(e.message);
+      //   await revertLastCommit();
+      //   process.exit(0);
+      // });
+
+      // 打标签
+      await gitTag(`v${targetVersion}`).catch(async e => {
+        await revertLastCommit();
         consola.error(e.message);
-        revertLastCommit();
         process.exit(0);
       });
 
-      if (tag) {
-        await gitTag(`v${targetVersion}`).catch(e => {
-          consola.error(e.message);
-          revertLastCommit();
-          process.exit(0);
-        });
-      }
-
-      await gitPush(`v${targetVersion}`).catch(e => {
+      // 推送变更和标签
+      await gitPush(`v${targetVersion}`).catch(async e => {
+        await revertLastCommit();
         consola.error(e.message);
-        revertLastCommit();
         process.exit(0);
       });
     }
   }
 
-  // 发布包
+  // 发布包到npm
   const publish = await confirmNpmPublish();
 
   if (publish) {

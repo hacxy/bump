@@ -70,7 +70,7 @@ export async function hasGit() {
 // 还原修改
 export async function revertChanges(changelog: boolean) {
   if (changelog) {
-    await execa`git restore package.json eslint.config.mjs`;
+    await execa`git restore package.json CHANGELOG.md`;
   }
   else {
     await execa`git restore package.json`;
