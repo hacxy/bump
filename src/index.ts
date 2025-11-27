@@ -19,21 +19,21 @@ export async function bootstrap() {
     process.exit(0);
   }
 
-  if (!confirmed) {
-    process.exit(0);
-  }
-
   // 修改版本号
   changePackageVersion(targetVersion);
 
   // 是否需要执行build命令
-  const build = await confirmBuild().catch(() => {
+  const build = await confirmBuild().catch(e => {
     revertChanges(false);
+    consola.error(e.message);
+    process.exit(0);
   });
 
   if (build) {
-    await buildPackage().catch(() => {
+    await buildPackage().catch(e => {
+      consola.error(e.message);
       revertChanges(false);
+      process.exit(0);
     });
   }
 
@@ -42,33 +42,60 @@ export async function bootstrap() {
 
   if (git) {
     // 是否需要生成changelog
-    const changelog = await confirmChangelog().catch(() => {
+    const changelog = await confirmChangelog().catch(e => {
+      consola.error(e.message);
       revertChanges(false);
-      return false;
+      process.exit(0);
     });
 
     if (changelog) {
-      await generateChangelog().catch(() => {
+      await generateChangelog().catch(e => {
+        consola.error(e.message);
         revertChanges(changelog);
+        process.exit(0);
       });
     }
 
     // 是否需要提交更改
-    const commit = await confirmCommit().catch(() => {
+    const commit = await confirmCommit().catch(e => {
+      consola.error(e.message);
       revertChanges(changelog);
+      process.exit(0);
     });
 
     if (commit) {
       // 提交并发布
-      await gitAdd(changelog).catch(() => revertChanges(changelog));
-      await gitCommit(`chore: release: v${targetVersion}`).catch(() => revertChanges(changelog));
+      await gitAdd(changelog).catch(e => {
+        consola.error(e.message);
+        revertChanges(changelog);
+        process.exit(0);
+      });
 
-      const tag = await confirmTag(targetVersion).catch(() => revertLastCommit());
+      await gitCommit(`chore: release: v${targetVersion}`).catch(e => {
+        consola.error(e.message);
+        revertChanges(changelog);
+        process.exit(0);
+      });
+
+      const tag = await confirmTag(targetVersion).catch(e => {
+        consola.error(e.message);
+        revertLastCommit();
+        process.exit(0);
+      });
+
       if (tag) {
-        await gitTag(`v${targetVersion}`).catch(() => revertLastCommit());
+        await gitTag(`v${targetVersion}`).catch(e => {
+          consola.error(e.message);
+          revertLastCommit();
+          process.exit(0);
+        });
       }
 
-      await gitPush(`v${targetVersion}`).catch(() => revertLastCommit());
+      await gitPush(`v${targetVersion}`).catch(e => {
+        consola.error(e.message);
+        revertLastCommit();
+        process.exit(0);
+      });
     }
   }
 
@@ -81,6 +108,6 @@ export async function bootstrap() {
 }
 
 bootstrap().catch(e => {
-  consola.error(e.message);
+  consola.error(e);
   process.exit(0);
 });
